@@ -19,7 +19,7 @@
   },
   "scripts": {
     "ts-types": " tsc --emitDeclarationOnly --outDir lib",
-    "build": "rimraf lib && node ./esbuild.config.js && npm run ts-types",
+    "build": "rimraf build && node ./esbuild.config.js && npm run ts-types",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook -o build"
   },
