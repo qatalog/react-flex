@@ -47,94 +47,105 @@ export const getGaps = (
   return gaps;
 };
 
-const NonnativeFlex: React.FC<Omit<FlexProps, "as">> = ({
-  wrap,
-  gap,
-  direction,
-  alignItems,
-  alignContent,
-  justify,
-  inline,
-  children,
-  ...props
-}) => {
-  const containerRef =
-    React.useRef<HTMLDivElement | null>() as React.MutableRefObject<HTMLDivElement>;
+const NonnativeFlex = React.forwardRef<
+  React.RefAttributes<HTMLDivElement>,
+  Omit<FlexProps, "as">
+>(
+  (
+    {
+      wrap,
+      gap,
+      direction,
+      alignItems,
+      alignContent,
+      justify,
+      inline,
+      children,
+      ...props
+    },
+    ref
+  ) => {
+    void ref;
+    const containerRef = React.useRef<HTMLDivElement | null>() as React.MutableRefObject<HTMLDivElement>;
 
-  const windowSize = useWindowResize();
+    const windowSize = useWindowResize();
 
-  const [rows, setRows] = React.useState({});
+    const [rows, setRows] = React.useState({});
 
-  const gaps = React.useMemo(() => getGaps(rows, gap!!), [rows]);
+    const gaps = React.useMemo(() => getGaps(rows, gap!!), [rows]);
 
-  React.useEffect(() => {
-    if (!gap!!) {
-      return;
-    }
-
-    if (!containerRef.current) {
-      return;
-    }
-
-    const { width } = containerRef?.current?.getBoundingClientRect() as DOMRect;
-
-    const newRows = {};
-
-    let rowsCount = 1;
-
-    let childsWidth = 0;
-
-    const containerChildrens = Array.from(
-      containerRef?.current?.children ?? []
-    );
-
-    containerChildrens.forEach((child: HTMLDivElement, i: number) => {
-      const childRect = child.getBoundingClientRect();
-
-      const nextChildRect =
-        containerChildrens?.[i + 1]?.getBoundingClientRect();
-
-      childsWidth += childRect?.width + gap;
-
-      if (!newRows[rowsCount]) {
-        newRows[rowsCount] = [i + 1];
-      } else {
-        newRows[rowsCount] = [...newRows[rowsCount], i + 1];
-      }
-
-      if (direction?.includes("column")) {
-        rowsCount += 1;
+    React.useEffect(() => {
+      if (!gap!!) {
         return;
       }
 
-      if (
-        wrap !== "nowrap" &&
-        (childsWidth > width || childsWidth + nextChildRect?.width > width)
-      ) {
-        rowsCount += 1;
-        childsWidth = 0;
+      if (!containerRef.current) {
+        return;
       }
-    });
 
-    setRows(newRows);
-  }, [containerRef.current, windowSize]);
+      const {
+        width,
+      } = containerRef?.current?.getBoundingClientRect() as DOMRect;
 
-  return (
-    <NonnativeFlexContainer
-      ref={containerRef}
-      $alignItems={alignItems}
-      $alignContent={alignContent}
-      $direction={direction}
-      $gaps={gaps}
-      $justify={justify}
-      $wrap={wrap}
-      $inline={inline}
-      {...props}
-    >
-      {children}
-    </NonnativeFlexContainer>
-  );
-};
+      const newRows = {};
+
+      let rowsCount = 1;
+
+      let childsWidth = 0;
+
+      const containerChildrens = Array.from(
+        containerRef?.current?.children ?? []
+      );
+
+      containerChildrens.forEach((child: HTMLDivElement, i: number) => {
+        const childRect = child.getBoundingClientRect();
+
+        const nextChildRect = containerChildrens?.[
+          i + 1
+        ]?.getBoundingClientRect();
+
+        childsWidth += childRect?.width + gap;
+
+        if (!newRows[rowsCount]) {
+          newRows[rowsCount] = [i + 1];
+        } else {
+          newRows[rowsCount] = [...newRows[rowsCount], i + 1];
+        }
+
+        if (direction?.includes("column")) {
+          rowsCount += 1;
+          return;
+        }
+
+        if (
+          wrap !== "nowrap" &&
+          (childsWidth > width || childsWidth + nextChildRect?.width > width)
+        ) {
+          rowsCount += 1;
+          childsWidth = 0;
+        }
+      });
+
+      setRows(newRows);
+    }, [containerRef.current, windowSize]);
+
+    return (
+      <NonnativeFlexContainer
+        ref={containerRef}
+        $alignItems={alignItems}
+        $alignContent={alignContent}
+        $direction={direction}
+        $gaps={gaps}
+        $justify={justify}
+        $wrap={wrap}
+        $inline={inline}
+        {...props}
+      >
+        {children}
+      </NonnativeFlexContainer>
+    );
+  }
+);
 
 NonnativeFlex.displayName = "NonnativeFlex";
 

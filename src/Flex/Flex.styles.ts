@@ -12,9 +12,8 @@ const calculateMargins = ({
   $gap = 0,
   $wrap = "nowrap",
   $direction = "row",
-  theme,
 }): FlattenSimpleInterpolation => {
-  const margin = theme.spacing($gap);
+  const margin = $gap;
 
   if ($wrap === "nowrap" || !$isNative) {
     if ($direction === "column") {
@@ -59,14 +58,13 @@ export const FlexContainer = styled.div<FlexContainerProps>`
   align-content: ${({ $alignContent }) => $alignContent};
   align-items: ${({ $alignItems }) => $alignItems};
 
-  ${({ $isNative, $gap = 0, $wrap = "nowrap", $direction = "row", theme }) =>
+  ${({ $isNative, $gap = 0, $wrap = "nowrap", $direction = "row" }) =>
     $gap > 0 &&
     calculateMargins({
       $isNative,
       $gap,
       $wrap,
       $direction,
-      theme,
     })}
 `;
 
@@ -76,7 +74,7 @@ export const NonnativeFlexContainer = styled(FlexContainer)<
   }
 >`
   & > * {
-    ${({ theme, $gaps }) => {
+    ${({ $gaps }) => {
       const childGaps = Object.keys($gaps);
 
       let styles = "";
@@ -90,8 +88,8 @@ export const NonnativeFlexContainer = styled(FlexContainer)<
       ${styles}
   
       &:nth-child(${gap}) {
-        margin-right: ${theme.spacing($gaps[gap].marginRight ?? 0)}px;
-        margin-bottom: ${theme.spacing($gaps[gap].marginBottom ?? 0)}px;
+        margin-right: ${$gaps[gap].marginRight ?? 0}px;
+        margin-bottom: ${$gaps[gap].marginBottom ?? 0}px;
       }
     `;
       });

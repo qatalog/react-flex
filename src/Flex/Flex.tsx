@@ -38,23 +38,27 @@ export interface FlexProps extends React.HTMLAttributes<any> {
   as?: React.ElementType;
 }
 
-const Flex: React.FC<FlexProps> = ({
-  wrap = "nowrap",
-  gap = 0,
-  inline = false,
-  ...props
-}) =>
-  wrap === "nowrap" || isFlexGapSupported ? (
-    <NativeFlex
-      gap={gap}
-      wrap={wrap}
-      isNative={isFlexGapSupported}
-      inline={inline}
-      {...props}
-    />
-  ) : (
-    <NonnativeFlex gap={gap} wrap={wrap} inline={inline} {...props} />
-  );
+const Flex = React.forwardRef<React.RefAttributes<HTMLDivElement>, FlexProps>(
+  ({ wrap = "nowrap", gap = 0, inline = false, ...props }, ref) =>
+    wrap === "nowrap" || isFlexGapSupported ? (
+      <NativeFlex
+        ref={ref}
+        gap={gap}
+        wrap={wrap}
+        isNative={isFlexGapSupported}
+        inline={inline}
+        {...props}
+      />
+    ) : (
+      <NonnativeFlex
+        ref={ref}
+        gap={gap}
+        wrap={wrap}
+        inline={inline}
+        {...props}
+      />
+    )
+);
 
 Flex.displayName = "Flex";
 
