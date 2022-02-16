@@ -1,33 +1,36 @@
-import * as React from "react";
+/*
+ * Original implementation by Vadim Dalecky (streamich): https://github.com/streamich/react-use
+ */
 
-interface WindowSizeTypes {
-  width: number;
-  height: number;
-}
+import { DependencyList, useCallback, useRef } from "react";
 
-export const useWindowResize = (): WindowSizeTypes => {
-  const [windowSize, setWindowSize] = React.useState(() => ({
-    width: window?.innerWidth,
-    height: window?.innerHeight,
-  }));
+export const useDebouncedFn = (
+  fn: Function,
+  ms: number = 0,
+  deps: DependencyList = []
+) => {
+  const ready = useRef<boolean | null>(true);
+  const timeout = useRef<ReturnType<typeof setTimeout>>();
 
-  const handleResize = () => {
-    setWindowSize({
-      width: window.innerWidth,
-      height: window.innerHeight,
-    });
-  };
+  const isReady = useCallback(() => ready.current, []);
 
-  React.useEffect(() => {
-    // Add event listener
-    window.addEventListener("resize", handleResize);
+  const debouncedFn = useCallback(() => {
+    if (isReady()) {
+      fn();
+      ready.current = false;
+      timeout.current = setTimeout(() => {
+        ready.current = true;
+        if (timeout.current) clearTimeout(timeout.current);
+      }, ms);
+    } else {
+      if (timeout.current) clearTimeout(timeout.current);
+      timeout.current = setTimeout(() => {
+        fn();
+        ready.current = true;
+        if (timeout.current) clearTimeout(timeout.current);
+      }, ms);
+    }
+  }, deps);
 
-    // Call handler right away so state gets updated with initial window size
-    handleResize();
-
-    // Remove event listener on cleanup
-    return () => window.removeEventListener("resize", handleResize);
-  }, []); // Empty array ensures that effect is only run on mount
-
-  return windowSize;
+  return [debouncedFn, isReady];
 };
