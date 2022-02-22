@@ -90,19 +90,19 @@ const Template: Story<FlexProps> = (args: FlexProps) => (
 export const Default = Template.bind({});
 
 Default.args = {
-  gap: 1,
+  gap: 8,
 };
 
 export const Wrap = Template.bind({});
 
 Wrap.args = {
-  gap: 1,
+  gap: 8,
   wrap: "wrap",
 };
 
 export const Column = Template.bind({});
 
 Column.args = {
-  gap: 1,
+  gap: 8,
   direction: "column",
 };

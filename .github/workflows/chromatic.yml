@@ -1,0 +1,38 @@
+name: Chromatic
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+concurrency:
+  group: chromatic-${{ github.ref }}-${{ github.event_name == 'push' && github.run_number }}
+  cancel-in-progress: true
+jobs:
+  chromatic:
+    runs-on: ubuntu-latest
+    steps:
+      - name: setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 'lts/*'
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: cache deps
+        uses: actions/cache@v2
+        id: cache
+        with:
+          path: "**/node_modules"
+          key: deps-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            deps-
+      - name: install deps
+        run: yarn --frozen-lockfile
+      - name: chromatic
+        uses: chromaui/action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          exitZeroOnChanges: true
+          exitOnceUploaded: true
