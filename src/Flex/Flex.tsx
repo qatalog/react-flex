@@ -32,7 +32,7 @@ export interface FlexProps extends React.HTMLAttributes<any> {
   children?: React.ReactNode;
   direction?: FlexDirection;
   gap?: number;
-  justify?: JustifyContent;
+  justifyContent?: JustifyContent;
   wrap?: FlexWrap;
   inline?: boolean;
   as?: React.ElementType;
