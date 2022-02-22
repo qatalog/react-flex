@@ -37,7 +37,7 @@ export default {
         type: "number",
       },
     },
-    justify: {
+    justifyContent: {
       control: {
         type: "select",
         options: [

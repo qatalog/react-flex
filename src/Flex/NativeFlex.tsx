@@ -16,7 +16,7 @@ const NativeFlex = forwardRef<
       children,
       direction,
       gap,
-      justify,
+      justifyContent,
       wrap,
       isNative,
       inline,
@@ -30,7 +30,7 @@ const NativeFlex = forwardRef<
       $alignContent={alignContent}
       $direction={direction}
       $gap={gap}
-      $justify={justify}
+      $justifyContent={justifyContent}
       $isNative={isNative}
       $wrap={wrap}
       $inline={inline}

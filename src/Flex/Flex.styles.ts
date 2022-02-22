@@ -54,7 +54,7 @@ export const FlexContainer = styled.div<FlexContainerProps>`
   display: ${({ $inline }) => (!!$inline ? "inline-flex" : "flex")};
   flex-direction: ${({ $direction }) => $direction};
   flex-wrap: ${({ $wrap }) => $wrap};
-  justify-content: ${({ $justify }) => $justify};
+  justify-content: ${({ $justifyContent }) => $justifyContent};
   align-content: ${({ $alignContent }) => $alignContent};
   align-items: ${({ $alignItems }) => $alignItems};
 
@@ -86,7 +86,7 @@ export const NonnativeFlexContainer = styled(FlexContainer)<
       childGaps.forEach((gap) => {
         styles = `
       ${styles}
-  
+
       &:nth-child(${gap}) {
         margin-right: ${$gaps[gap].marginRight ?? 0}px;
         margin-bottom: ${$gaps[gap].marginBottom ?? 0}px;

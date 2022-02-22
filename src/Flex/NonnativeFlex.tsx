@@ -58,7 +58,7 @@ const NonnativeFlex = React.forwardRef<
       direction,
       alignItems,
       alignContent,
-      justify,
+      justifyContent,
       inline,
       children,
       ...props
@@ -140,7 +140,7 @@ const NonnativeFlex = React.forwardRef<
         $alignContent={alignContent}
         $direction={direction}
         $gaps={gaps}
-        $justify={justify}
+        $justifyContent={justifyContent}
         $wrap={wrap}
         $inline={inline}
         {...props}
