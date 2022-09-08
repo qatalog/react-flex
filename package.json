@@ -3,13 +3,15 @@
   "version": "0.1.0",
   "description": "A browser-agnostic flexbox component with CSS gap support",
   "repository": "https://github.com/qatalog/react-flex.git",
-  "author": "Qatalog Devs",
+  "author": "Qatalog Engineers <engineering@qatalog.com>",
   "license": "MIT",
-  "private": false,
   "main": "lib/index.js",
   "files": [
     "lib"
   ],
+  "engines": {
+    "node": ">=14"
+  },
   "dependencies": {
     "styled-components": "^5.3.3"
   },
