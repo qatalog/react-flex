@@ -12,7 +12,7 @@
 
 ## What's this?
 
-A browser-agnostic flexbox component with CSS gap ployfill support. Uses feature detection to ensure consistent rendering across platforms.
+A browser-agnostic flexbox component with CSS gap polyfill support. Uses feature detection to ensure consistent rendering across platforms.
 
 ## Why should I use this package?
 
