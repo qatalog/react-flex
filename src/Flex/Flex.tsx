@@ -12,6 +12,7 @@ import NativeFlex from "./NativeFlex";
 import NonnativeFlex from "./NonnativeFlex";
 
 let isFlexGapSupported = false;
+
 if (typeof window !== "undefined") {
   const isOpera =
     // @ts-ignore
