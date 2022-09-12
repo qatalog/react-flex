@@ -12,6 +12,4 @@ export type FlexDirection = Property.FlexDirection | undefined;
 
 export type JustifyContent = Property.JustifyContent | undefined;
 
-// NOTE: 'wrap-reverse' is omitted because it is not in our existing patterns.
-// Can discuss with design if it becomes necessary.
-export type FlexWrap = Exclude<Property.FlexWrap, "wrap-reverse"> | undefined;
+export type FlexWrap = Property.FlexWrap | undefined;
