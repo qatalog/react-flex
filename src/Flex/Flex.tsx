@@ -27,7 +27,7 @@ if (typeof window !== "undefined") {
     !!window?.CSS?.supports?.("gap", "0px") && !(isSafari || isOpera);
 }
 
-export interface FlexProps extends React.HTMLAttributes<any> {
+export interface FlexProps extends Omit<React.AllHTMLAttributes<any>, "as"> {
   alignContent?: AlignContent;
   alignItems?: AlignItems;
   children?: React.ReactNode;
