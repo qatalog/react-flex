@@ -1,51 +1,10 @@
 import React from "react";
 
-import { useDebouncedFn } from "./util";
+import { getGaps, useDebouncedFn } from "./util";
 
 import { FlexProps } from "./Flex";
+
 import { NonnativeFlexContainer } from "./Flex.styles";
-
-export const getGaps = (
-  rows: Record<string, number[]>,
-  gap: number
-): Record<number, Record<string, number>> => {
-  let gaps = {};
-
-  if (!gap) {
-    return gaps;
-  }
-
-  const rowsIndex = Object.keys(rows);
-
-  if (!rowsIndex) {
-    return gaps;
-  }
-
-  if (rowsIndex.length === 1) {
-    rows[1].forEach((rowIndex: number, i: number) => {
-      gaps = {
-        ...gaps,
-        [rowIndex]: {
-          marginRight: rows[1].length === i + 1 ? 0 : gap,
-        },
-      };
-    });
-  } else {
-    rowsIndex.forEach((rowIndex: string) => {
-      rows[rowIndex].forEach((index: number, i: number) => {
-        gaps = {
-          ...gaps,
-          [index]: {
-            marginRight: rows[rowIndex].length === i + 1 ? 0 : gap,
-            marginBottom: parseInt(rowIndex, 10) === rowsIndex.length ? 0 : gap,
-          },
-        };
-      });
-    });
-  }
-
-  return gaps;
-};
 
 const NonnativeFlex = React.forwardRef<
   React.RefAttributes<HTMLDivElement>,

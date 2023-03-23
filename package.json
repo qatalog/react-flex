@@ -1,11 +1,16 @@
 {
   "name": "@qatalog/react-flex",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A browser-agnostic flexbox component with CSS gap support",
   "repository": "https://github.com/qatalog/react-flex.git",
   "author": "Qatalog Engineers <engineering@qatalog.com>",
   "license": "MIT",
   "main": "build/index.js",
+  "jest": {
+    "testPathIgnorePatterns": [
+      "example"
+    ]
+  },
   "files": [
     "build"
   ],
@@ -21,7 +26,8 @@
     "ts-types": "tsc --emitDeclarationOnly",
     "build": "rimraf build && node ./esbuild.config.js && yarn ts-types",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook -o build"
+    "build-storybook": "build-storybook -o build",
+    "test": "jest"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^6.3.12",
