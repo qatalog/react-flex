@@ -1,0 +1,20 @@
+name: Run Unit Tests
+on: [pull_request, push]
+jobs:
+  frontend:
+    needs: [changes]
+    timeout-minutes: 20
+    env:
+      NODE_ENV: local
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: setup node
+        uses: actions/setup-node@v2
+        with:
+          cache: 'yarn'
+          node-version: '16'
+      - name: install deps
+        run: yarn --frozen-lockfile --prefer-offline
+      - name: run tests
+        run: yarn test
