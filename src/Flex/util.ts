@@ -4,6 +4,37 @@
 
 import { DependencyList, useCallback, useRef } from "react";
 
+interface BrowserInfo {
+  name: string;
+  version: string;
+}
+
+export const getBrowserInfo = (): BrowserInfo | Error => {
+  if (typeof window === "undefined") {
+    return new Error("window is undefined");
+  }
+
+  const ua = window.navigator.userAgent.toLowerCase();
+
+  const regexes: { [key: string]: RegExp } = {
+    chrome: /chrome\/([\d.]+)/,
+    safari: /version\/([\d.]+).*safari/,
+    firefox: /firefox\/([\d.]+)/,
+    edge: /edge\/([\d.]+)/,
+    opera: /opr\/([\d.]+)/,
+  };
+
+  for (const [name, regex] of Object.entries(regexes)) {
+    const match = ua.match(regex);
+
+    if (match) {
+      return { name, version: match[1] };
+    }
+  }
+
+  return new Error("Browser not detected");
+};
+
 export const useDebouncedFn = (
   fn: Function,
   ms: number = 0,
