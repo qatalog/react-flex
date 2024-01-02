@@ -50,5 +50,9 @@
     "styled-components": "^5.3.3",
     "ts-jest": "^27.0.7",
     "typescript": "^4.5.2"
+  },
+  "resolutions": {
+    "//qs": "Fix https://github.com/qatalog/react-flex/security/dependabot/43",
+    "qs": "^6.10.2"
   }
 }
